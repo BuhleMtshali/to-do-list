@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", loadTasksFromLocalStorage); //This ensures that the loadTasksFromLocalStorage function is called when the HTML document has been completely loaded and parsed. It loads any previously saved tasks from local storage.
 
-function addTask() {
+function addTask(event) {
+  event.preventDefault(); // Prevent form submission
   const taskInput = document.querySelector("#text-input");
   const taskText = taskInput.value.trim(); //the trim removes excess whitespace
   if (taskText === "") return;
@@ -15,7 +16,7 @@ function addTask() {
 
   li.addEventListener("click", completeTask);
 
-  const taskList = document.querySelector("taskList");
+  const taskList = document.querySelector("#taskList");
   taskList.appendChild(li); //this creates the child li element of the parent ul element
 
   taskInput.value = "";
@@ -26,7 +27,7 @@ function deleteTask(event) {
   const task = event.target.parentElement;
   const taskList = document.querySelector("#taskList");
   taskList.removeChild(task);
-  saveTaskToLocalStorage(); //update the local storage
+  saveTasksToLocalStorage(); //update the local storage
 }
 function completeTask(event) {
   const task = event.target;
@@ -39,13 +40,15 @@ function completeTask(event) {
 //this function adds to the local storage
 
 function saveTasksToLocalStorage() {
-  const tasks = []; //empty array to load list items
-  const taskItems = document.querySelector("#taskList");
+  const tasks = []; // Empty array to load list items
+  const taskItems = document.querySelectorAll("#taskList li"); // Get all li elements
 
-  for (let i = 0; i < taskItems.length; i++) {
-    const taskText = taskItems[i].classList.contains("completed");
+  taskItems.forEach((taskItem) => {
+    const taskText = taskItem.firstChild.textContent.trim(); // Get the task text
+    const isCompleted = taskItem.classList.contains("completed");
     tasks.push({ text: taskText, completed: isCompleted });
-  }
+  });
+
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
@@ -73,5 +76,5 @@ function loadTasksFromLocalStorage() {
   }
 }
 
-const submitTaskButton = document.querySelector("#submit-btn");
-submitTaskButton.addEventListener("click", addTask);
+const taskForm = document.getElementById("taskForm");
+taskForm.addEventListener("submit", addTask);

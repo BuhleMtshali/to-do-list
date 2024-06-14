@@ -4,9 +4,15 @@ body {
   background-color: #dad7cd;
 }
 .container {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+  margin: auto;
+}
+h1 {
+  text-align: center;
+  font-size: 40px;
+  color: #780000;
+}
+form {
+  display: block;
 }
 input {
   padding: 15px 25px;
@@ -38,9 +44,10 @@ ul {
   list-style-type: disc;
 }
 li {
-  font-size: 16px;
+  font-size: 19px;
   color: #344e41;
-  padding: 8px;
+  padding: 6px;
+  font-weight: 600;
 }
 li::marker {
   color: #344e41;
@@ -52,4 +59,5 @@ button {
   background-color: #780000;
   color: white;
   padding: 3px 6px;
+  cursor: pointer;
 }

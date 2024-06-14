@@ -45,16 +45,16 @@ input {
   color: #344e41;
 }
 ul {
-  list-style-type: disc;
+  list-style-type: lower-greek;
 }
 li {
-  font-size: 19px;
+  font-size: 22px;
   color: #344e41;
   padding: 6px;
   font-weight: 600;
 }
 li::marker {
-  color: #344e41;
+  color: #780000;
 }
 button {
   margin-left: 10px;
@@ -64,4 +64,5 @@ button {
   color: white;
   padding: 3px 6px;
   cursor: pointer;
+  font-size: 14px;
 }

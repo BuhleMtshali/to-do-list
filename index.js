@@ -19,6 +19,58 @@ function addTask() {
   taskList.appendChild(li); //this creates the child li element of the parent ul element
 
   taskInput.value = "";
+  saveTasksToLocalStorage(); //this calls the save to local storage function
+}
+
+function deleteTask(event) {
+  const task = event.target.parentElement;
+  const taskList = document.querySelector("#taskList");
+  taskList.removeChild(task);
+  saveTaskToLocalStorage(); //update the local storage
+}
+function completeTask(event) {
+  const task = event.target;
+  if (task.tagName === "LI") {
+    task.classList.toggle("completed");
+    saveTasksToLocalStorage();
+  }
+}
+
+//this function adds to the local storage
+
+function saveTasksToLocalStorage() {
+  const tasks = []; //empty array to load list items
+  const taskItems = document.querySelector("#taskList");
+
+  for (let i = 0; i < taskItems.length; i++) {
+    const taskText = taskItems[i].classList.contains("completed");
+    tasks.push({ text: taskText, completed: isCompleted });
+  }
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  if (tasks) {
+    tasks.forEach((task) => {
+      const li = document.createElement("li");
+      li.textContent = task.text;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.addEventListener("click", deleteTask);
+      li.appendChild(deleteBtn);
+
+      if (task.completed) {
+        li.classList.add("completed");
+      }
+
+      li.addEventListener("click", completeTask);
+
+      const taskList = document.getElementById("taskList");
+      taskList.appendChild(li);
+    });
+  }
 }
 
 const submitTaskButton = document.querySelector("#submit-btn");

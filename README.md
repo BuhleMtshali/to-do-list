@@ -1,4 +1,3 @@
-Certainly! Here's a README file for your To-Do List app:
 
 ---
 
